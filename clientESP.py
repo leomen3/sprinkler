@@ -11,7 +11,7 @@ DEEP_SLEEP_INTERVAL = 10  # second
 IRRIGATION_DURATION = 5 # seconds
 #TODO add time from RPi server when connection is possible
 
-def test():
+def test2():
     pass
 
 def toggleLED(p):
