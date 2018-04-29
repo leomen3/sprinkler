@@ -1,4 +1,4 @@
-###########################################################################
+ ###########################################################################
 # Setup code goes below, this is called once at the start of the program: #
 ###########################################################################
 import time
@@ -11,6 +11,8 @@ DEEP_SLEEP_INTERVAL = 10  # second
 IRRIGATION_DURATION = 5 # seconds
 #TODO add time from RPi server when connection is possible
 
+def test():
+    pass
 
 def toggleLED(p):
     p.value(not p.value())
@@ -114,6 +116,8 @@ print("current year: ", current_year)
 if str(current_year) != '2018':
     print("time not initialize - setting")
     initTime(22, 23, 24, 20, 4, 2018)
+
+#TODO Add OTA bootloader
 
 while True:
     
