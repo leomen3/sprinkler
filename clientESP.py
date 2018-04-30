@@ -11,28 +11,28 @@ DEEP_SLEEP_INTERVAL = 10  # second
 IRRIGATION_DURATION = 5 # seconds
 #TODO add time from RPi server when connection is possible
 
-def test2():
-    pass
 
 def toggleLED(p):
     p.value(not p.value())
 
 
-def ledOn(p):
+def pinOn(p):
     p.value(0)
 
 
-def ledOff(p):
+def pinOff(p):
     p.value(1)
 
 
 def irrigationStart():
-    ledOn(pinLED)
+    pinOn(pinLED)
+    setValve2State("ON")
     time.sleep(IRRIGATION_DURATION)
 
 
 def irrgationStop():
-    ledOff(pinLED)
+    setValve2State("OFF")
+    pinOff(pinLED)
 
 
 def initTime(hour=6, minute=7, second=8, day=18, month=7, year=1980):
@@ -108,8 +108,24 @@ def getState():
     return rtc.memory()
 
 
+def setValve2State(state="OFF"):
+    #set control pins of the H-bridge channel 2
+    if state == "ON":
+        pinOff(pinGPIO5)
+        pinOn(pinGPIO4)
+    else:
+        pinOff(pinGPIO4)
+        pinOn(pinGPIO5)
+    return
+
+
 #Generic Init
-pinLED = machine.Pin(2, machine.Pin.OUT)
+pinLED = machine.Pin(2, machine.Pin.OUT)    # led indicator pin
+
+pinGPIO5 = machine.Pin(5, machine.Pin.OUT)   # H-Bridge ch@ cntrl pinA
+pinOff(pinGPIO5)
+pinGPIO4 = machine.Pin(4, machine.Pin.OUT)   # H-Bridge ch@ cntrl pinB
+pinOff(pinGPIO4)
 rtc = RTC()
 #netConnect()
 curr_tm = getDateTime()  #TODO need to do proper time setting here, from internet
@@ -128,8 +144,7 @@ while True:
     # (2) if successful, log and update configuration
     curr_tm = getDateTime()
     #time_rep = curr_tm
-    # time_rep = str(curr_tm[0])+'-'+str(curr_tm[1])+'-'+str(curr_tm[2])+'->'+
-    #             str(curr_tm[3])+':'+str(curr_tm[4])+':'+str(curr_tm[5])
+    time_rep = str(curr_tm[0])+'-'+str(curr_tm[1])+'-'+str(curr_tm[2])+'->'+str(curr_tm[3])+':'+str(curr_tm[4])+':'+str(curr_tm[5])
     #print(curr_tm)
     print("Current time: ", time_rep)
     
