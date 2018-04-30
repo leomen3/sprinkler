@@ -36,6 +36,7 @@ def irrgationStop():
 
 
 def initTime(hour=6, minute=7, second=8, day=18, month=7, year=1980):
+    # Initialize system time
     # The 8-tuple has the following format:
     #(year, month, day, weekday, hours, minutes, seconds, subseconds)
     # weekday is 1-7 for Monday through Sunday.
