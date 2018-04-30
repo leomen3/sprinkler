@@ -47,6 +47,7 @@ def initTime(hour=6, minute=7, second=8, day=18, month=7, year=1980):
 
 
 def getDateTime():
+    # return system time maintained by RTC
     return rtc.datetime()   # get date and time
 
 
