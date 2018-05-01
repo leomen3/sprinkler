@@ -6,9 +6,9 @@ import machine
 from machine import RTC
 
 COMMANDS_PORT = 5640
-RPi_HOST = "10.0.0.5"
-DEEP_SLEEP_INTERVAL = 10  # second
-IRRIGATION_DURATION = 5 # seconds
+RPi_HOST = "10.0.0.12"
+DEEP_SLEEP_INTERVAL = 10    # seconds
+IRRIGATION_DURATION = 5     # seconds
 #TODO add time from RPi server when connection is possible
 
 
@@ -127,7 +127,7 @@ pinOff(pinGPIO5)
 pinGPIO4 = machine.Pin(4, machine.Pin.OUT)   # H-Bridge ch@ cntrl pinB
 pinOff(pinGPIO4)
 rtc = RTC()
-#netConnect()
+netConnect()
 curr_tm = getDateTime()  #TODO need to do proper time setting here, from internet
 current_year = str(curr_tm[0])
 print("current year: ", current_year)
@@ -138,16 +138,13 @@ if str(current_year) != '2018':
 #TODO Add OTA bootloader
 
 while True:
-    
     # (1)attempt connecting to server to get status, commands and send log
-    
+    reqCommands()
     # (2) if successful, log and update configuration
     curr_tm = getDateTime()
-    #time_rep = curr_tm
     time_rep = str(curr_tm[0])+'-'+str(curr_tm[1])+'-'+str(curr_tm[2])+'->'+str(curr_tm[3])+':'+str(curr_tm[4])+':'+str(curr_tm[5])
-    #print(curr_tm)
     print("Current time: ", time_rep)
-    
+
     # Retrieve state from RTC memory
     state = getState()
     print("Retrieved state (last irrigation ended): ", state)
